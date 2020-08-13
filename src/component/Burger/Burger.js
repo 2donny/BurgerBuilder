@@ -15,8 +15,6 @@ function Burger( {ingredient} ) {
         transformedIngredient = <p>햄버거를 추가해주세요.</p>;
     }
     
-    console.log(transformedIngredient);
-    console.log('hi');
     return (
         <div className="Burger">
             <BurgerIngredient type="BreadTop"/>
