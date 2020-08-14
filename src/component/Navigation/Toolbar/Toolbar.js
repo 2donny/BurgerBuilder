@@ -7,8 +7,10 @@ function Toolbar() {
     return (
         <header className="Toolbar">
             <div>MENU</div>
-            <Logo />
-            <Navigationitems />
+            <Logo height="80%"/>
+            <nav className="Toolbar--nav">
+                <Navigationitems/>
+            </nav>
         </header>
     )
 }

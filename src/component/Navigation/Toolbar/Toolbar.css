@@ -13,7 +13,13 @@
     box-sizing: border-box;
 }
 
-.Toolbar nav {
-    height: 100%;
+.Toolbar--nav {
+    display: none;
+}
 
+@media (min-width: 500px) {
+    .Toolbar--nav {
+        display: block;
+        height: 100%;
+    }
 }
