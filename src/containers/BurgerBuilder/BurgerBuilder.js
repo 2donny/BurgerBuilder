@@ -5,10 +5,10 @@ import Modal from '../../component/UI/Modal/Modal';
 import OrderSummary from '../../component/Burger/orderSummary/orderSummary';
 
 const INGREDIENTS_PRICE = {
-    Meat: 1500,
-    Cheese: 700,
-    Salad: 500,
-    Bacon: 1000
+    Meat: 1.5,
+    Cheese: 0.6,
+    Salad: 0.4,
+    Bacon: 1.5
 }
 
 class BurgerBuilder extends React.Component {
@@ -21,7 +21,7 @@ class BurgerBuilder extends React.Component {
                 Salad: 0,
                 Bacon: 0
             },
-            totalPrice: 4000,
+            totalPrice: 4,
             purchasable: false, //Order Now 버튼 클릭가능 속성
             purchasing: false  //Order Now Button Click or not ?
         }

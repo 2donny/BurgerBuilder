@@ -17,7 +17,7 @@ function orderSummary( {cancleClicked, continueClicked, ingredients, totalPrice}
             <ul>
                 {ingredientSummary}
             </ul>
-            <strong>Total Price : {totalPrice}</strong>
+            <strong>Total Price : {totalPrice.toFixed(2)}</strong>
             <p>Continue to check out?</p>
             <Button clicked={cancleClicked} btnType="Danger">Cancel</Button>
             <Button clicked={continueClicked} btnType="Success">Continue</Button>
