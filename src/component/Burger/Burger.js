@@ -12,7 +12,7 @@ function Burger( {ingredient} ) {
         }, []);
     
     if(transformedIngredient.length === 0) {
-        transformedIngredient = <p>햄버거를 추가해주세요.</p>;
+        transformedIngredient = <p>Please start adding ingredients!</p>;
     }
     
     return (

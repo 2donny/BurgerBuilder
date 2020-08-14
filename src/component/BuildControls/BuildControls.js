@@ -21,10 +21,10 @@ const controls = [
     },
 ]
 
-function BuildControls({disabledInfo, addIngredientHandler, removeIngredientHandler}) {
-    console.log(disabledInfo);
+function BuildControls({totalPrice, disabledInfo, addIngredientHandler, removeIngredientHandler, purchasableInfo, ordered}) {
     return (
         <div className="BuildControls">
+            <p>Current Price : <strong>{totalPrice}</strong></p>
             {controls.map(ctrl => (
                 <BuildControl 
                 key={ctrl.label}
@@ -32,8 +32,14 @@ function BuildControls({disabledInfo, addIngredientHandler, removeIngredientHand
                 disabledInfo={disabledInfo[ctrl.type]}
                 addIngredientHandler={() => addIngredientHandler(ctrl.type)}
                 removeIngredientHandler={() => removeIngredientHandler(ctrl.type)}
+                purchasableInfo={purchasableInfo}
                 />
             ))}
+            <button 
+                className="OrderButton" 
+                disabled={!purchasableInfo}
+                onClick={ordered}
+            > ORDER NOW </button>
         </div>
     )
 }
