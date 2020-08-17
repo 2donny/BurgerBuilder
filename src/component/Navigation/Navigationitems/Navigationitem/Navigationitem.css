@@ -1,5 +1,6 @@
 .Navigationitem a {
     color: #8F5C2C;
+    width: 100%;
     margin: 10px 0;
     font: inherit;
     box-sizing: border-box;
@@ -17,7 +18,7 @@ a.active
 @media only screen and (min-width: 500px) {
     .Navigationitem a {
         height: 100%;
-        margin:  0px;
+        margin:  auto;
         display: flex;
         align-items: center;
         color: white;

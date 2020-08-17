@@ -2,11 +2,12 @@ import React from 'react';
 import './Toolbar.css';
 import Logo from '../../Logo/Logo';
 import Navigationitems from '../Navigationitems/Navigationitems';
+import SidedrawerToggle from '../SideDrawer/SidedrawerToggle/SidedrawerToggle';
 
-function Toolbar() {
+function Toolbar(props) {
     return (
         <header className="Toolbar">
-            <div>MENU</div>
+            <SidedrawerToggle clicked={props.MenuClicked}/>
             <Logo height="80%"/>
             <nav className="Toolbar--nav">
                 <Navigationitems/>

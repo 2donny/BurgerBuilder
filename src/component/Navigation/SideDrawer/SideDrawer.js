@@ -4,14 +4,16 @@ import Logo from '../../Logo/Logo';
 import Navigationitem from '../Navigationitems/Navigationitem/Navigationitem';
 import Navigationitems from '../Navigationitems/Navigationitems';
 
-function SideDrawer() {
+function SideDrawer(props) {
     return (
-        <div className="SideDrawer">
+        <div className={props.show ? "SideDrawer Open" : "SideDrawer Close"}>
             <Logo height="11%"/>
-            <Navigationitems>
-                <Navigationitem active={false}>Burger Builder</Navigationitem>
-                <Navigationitem active={false}>Checkout</Navigationitem>
-            </Navigationitems>
+            <div className="drawer--nav">
+                <Navigationitems>
+                    <Navigationitem active={false}>Burger Builder</Navigationitem>
+                    <Navigationitem active={false}>Checkout</Navigationitem>
+                </Navigationitems>
+            </div>
         </div>
     )
 }

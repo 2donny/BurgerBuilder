@@ -3,25 +3,15 @@
     left: 0;
     top: 0;
     padding: 32px 16px;
-    width: 280px;
+    width: 250px;
     height: 100vh;
     background-color: #ffffff;
     z-index: 500;
-    transition: transform .5s ease-out;
+    transition: transform .3s ease-in;
 }
 
-.logo {
-    margin-bottom: 32px;
-    height: 11%;
-}
-
-@media (min-width: 500px) {
-    .SideDrawer {
-        display: none;
-    }
-    .logo {
-        margin: auto;
-    }
+.drawer--nav {
+    margin-top: 32px;
 }
 
 .Open {
