@@ -5,6 +5,7 @@ import Modal from '../../component/UI/Modal/Modal';
 import OrderSummary from '../../component/Burger/orderSummary/orderSummary';
 import axios from '../../axios-orders';
 import Spinner from '../../component/UI/Spinner/Spinner';
+import withErrorHandler from '../../HOC/withErrorHandler/withErrorHandler';
 
 const INGREDIENTS_PRICE = {
     Meat: 1.5,
@@ -27,46 +28,46 @@ class BurgerBuilder extends React.Component {
     }
     
     componentDidMount() {
-        axios.get('https://burger-builder-6b6a7.firebaseio.com/data.json')
+        axios.get('/data.json')
             .then(response => {
                 this.setState({ingredient: response.data.ingredient, totalPrice: response.data.totalPrice});
             })
-            .catch(error => {this.setState({error: true})});
+            .catch(() => {this.setState({error: true})});
     }
 
     purchaseHandler = () => {
         this.setState({purchasing: true});
     }
 
-    purchaseCancelHandler = () => {
+    purchaseCancleHandler = () => {
         this.setState({purchasing: false});
     }
 
     purchaseContinueHandler = () => {
-        this.setState({onOrder: true});
-        const order = {
-            ingredients: this.state.ingredient,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Jung E Eon',
-                address: {
-                    country: 'Korea',
-                    home: 'Sejong',
-                    zipcode: 4431
-                },
-                email: 'test@gmail.com'
-            },
-            deliveryMethod: 'fastest'
-        };
-        axios.post('/orders.json', order)
-            .then(response => {
-                console.log(response);
-                this.setState({onOrder: false, purchasing: false})
-            })
-            .catch(() => {
-                this.setState({onOrder: false, purchasing: false})
-                alert("There is an Error!");
-            });
+        this.props.history.push('/checkout?' + this.state.ingredient);
+        // this.setState({onOrder: true});
+        // const order = {
+        //     ingredients: this.state.ingredient,
+        //     price: this.state.totalPrice,
+        //     customer: {
+        //         name: 'Jung E Eon',
+        //         address: {
+        //             country: 'Korea',
+        //             home: 'Sejong',
+        //             zipcode: 4431
+        //         },
+        //         email: 'test@gmail.com'
+        //     },
+        //     deliveryMethod: 'fastest'
+        // };
+        // axios.post('/orders.json', order)
+        //     .then(response => {
+        //         console.log('response', response);
+        //         this.setState({onOrder: false, purchasing: false})
+        //     })
+        //     .catch(() => {
+        //         this.setState({onOrder: false, purchasing: false})
+        //     });
     }
 
 
@@ -122,7 +123,7 @@ class BurgerBuilder extends React.Component {
             orderSummary = (
                         <OrderSummary 
                             continueClicked={this.purchaseContinueHandler} 
-                            cancleClicked={this.purchaseCancelHandler} 
+                            cancleClicked={this.purchaseCancleHandler} 
                             totalPrice={totalPrice}
                             ingredients={ingredient}>
                         </OrderSummary>
@@ -162,6 +163,6 @@ class BurgerBuilder extends React.Component {
     } 
 }
 
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder, axios);
 
 
