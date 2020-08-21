@@ -44,7 +44,16 @@ class BurgerBuilder extends React.Component {
     }
 
     purchaseContinueHandler = () => {
-        this.props.history.push('/checkout?' + this.state.ingredient);
+        const {ingredient} = this.state; 
+        const UpdatedIngredients = Object.keys(ingredient).map(ig => { //[Meat, Salad, Cheese, Bacon]
+            return ig + '=' + ingredient[ig] //[Meat=1, Salad=2, Cheese=2, Bacon=1]
+        }) 
+        const ingredientParam = UpdatedIngredients.join('&');
+
+        this.props.history.push({
+            pathname: '/checkout',
+            search: `?${ingredientParam}`,
+        });
         // this.setState({onOrder: true});
         // const order = {
         //     ingredients: this.state.ingredient,
@@ -157,7 +166,6 @@ class BurgerBuilder extends React.Component {
                 <Modal modalClosed={this.purchaseCancelHandler} show={purchasing}>
                     {orderSummary}
                 </Modal>
-                
             </>
         )
     } 
