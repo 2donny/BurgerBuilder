@@ -15,8 +15,9 @@ class Checkout extends React.Component {
             }
         }
     }
-    
+  
     componentDidMount() {
+        console.log('mount');
         // console.log(this.props); // => Bacon=1&Cheese=0&Meat=2&Salad=0
         const params = new URLSearchParams(this.props.location.search);
         let receivedIngredient = {
@@ -33,7 +34,7 @@ class Checkout extends React.Component {
     }
 
     checkoutContinueHandler = () => {
-        this.props.history.replace('/checkout/contact-data');
+        this.props.history.push('/checkout/contact-data');
     }
 
     render() {
