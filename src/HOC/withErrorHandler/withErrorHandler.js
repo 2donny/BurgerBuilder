@@ -11,8 +11,8 @@ function withErrorHandler(WrappedComponent, axios) {
             this.setState({error: null});
         }
 
-        componentWillMount() {
-            this.reqInterceptor = axios.interceptors.request.use(req => { // request 보내기 전에 여기로 온다.
+        componentWillMount() { // request 보내기 전에 여기로 온다.
+            this.reqInterceptor = axios.interceptors.request.use(req => { 
                 this.setState({error: null});
                 return req;
             });

@@ -8,13 +8,6 @@
     text-decoration: none;
 }
 
-a:hover,
-a:active,
-a.active
-{
-    color: #40A4C8;
-}
-
 @media only screen and (min-width: 500px) {
     .Navigationitem a {
         height: 100%;
@@ -22,7 +15,7 @@ a.active
         display: flex;
         align-items: center;
         color: white;
-        padding: 16px 13px;
+        padding: 16px;
         border-bottom: 4px solid transparent;
     }
     a:hover,

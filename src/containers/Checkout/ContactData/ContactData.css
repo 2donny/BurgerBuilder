@@ -7,16 +7,6 @@
     padding: 20px;
 }
 
-.form-data {
-}
-
-.form-data input {
-    padding: 5px;
-    display: block;
-    width: 50%;
-    border-radius: 5px;
-}
-
 @media (min-width: 600px) {
     .ContactData {
         width: 500px;

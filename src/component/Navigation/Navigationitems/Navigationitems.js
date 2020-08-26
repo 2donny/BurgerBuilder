@@ -5,8 +5,8 @@ import Navigationitem from './Navigationitem/Navigationitem';
 function Navigationitems() {
     return (
         <ul className="Navigationitems">
-            <Navigationitem link="/" active>Burger Builder</Navigationitem> 
-            <Navigationitem link="/">Checkout</Navigationitem>
+            <Navigationitem link="/">Burger Builder</Navigationitem> 
+            <Navigationitem link="/orders">Checkout</Navigationitem>
         </ul>
     )
 }

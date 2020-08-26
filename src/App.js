@@ -3,7 +3,7 @@ import Layout from './component/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Checkout from './containers/Checkout/Checkout';
 import {Route, Switch} from 'react-router-dom';
-import ContactData from './containers/Checkout/ContactData/ContactData';
+import Orders from './containers/Orders/Orders';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
         <Layout>
           <Switch>
             <Route path="/checkout" component={Checkout}/>
-            <Route path="/checkout/contact-data" component={ContactData}/>
+            <Route path="/orders" component={Orders}/>
             <Route path="/" component={BurgerBuilder}/>
           </Switch>
         </Layout>
