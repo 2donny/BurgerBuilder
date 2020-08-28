@@ -4,22 +4,89 @@ import Button from '../../../component/UI/Button/Button';
 import Spinner from '../../../component/UI/Spinner/Spinner';
 import axios from '../../../axios-orders';
 import Input from '../../../component/UI/Input/Input';
+import {connect} from 'react-redux';
 
 class ContactData extends React.Component {
     state = {
-        ingredient: null,
         orderForm: {
-            customer: {
-                name: '',
-                email: '',
-                address: {
-                    street: '',
-                    postalCode: '',
-                    country: ''
-                }
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your name'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false 
             },
-            deliveryMethod: 'fastest'
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'email',
+                    placeholder: 'Your Email'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
+            ZipCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Zip Code'
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 10
+                },
+                valid: false,
+                touched: false
+            },
+            street: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Street'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
+            country: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Country'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    option: [{value: 'fastest', displayValue: 'Fastest'}, {value: 'cheapest', displayValue: 'Cheapest'}]
+                },
+                value: 'fastest',
+                valid: true
+            },
         },
+        formIsValid: false,
+        ingredient: null,
         totalPrice: null,
         onOrder: false,
     }
@@ -27,10 +94,15 @@ class ContactData extends React.Component {
     orderHandler = (event) => {
         event.preventDefault();
         this.setState({onOrder: true});
+
+        const formData = {};
+        for(let formElementIdentifier in this.state.orderForm) {
+            formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
+        }
         const order = { // 서버에 보낼 order 만들기.
-            ingredient: this.props.ingredient,
-            ...this.state.userInfo,
-            totalPrice: this.props.totalPrice
+            ingredient: this.props.ingre,
+            totalPrice: this.props.totPrice,
+            orderForm: formData,
         }
         axios.post('/orders.json', order)
             .then(response => {
@@ -42,22 +114,77 @@ class ContactData extends React.Component {
             });
     }
 
+    checkValidity = (value, rules) => {
+        let isValid = false;
+
+        if(!rules) {
+            return false;
+        }
+        if(rules.required) {
+            isValid = value.trim() !== '';
+        }
+
+        if(rules.minLength) {
+            isValid = (value.length >= rules.minLength);
+        }
+
+        if(rules.maxLength) {
+            isValid = value.length <= rules.maxLength && isValid;
+        }
+
+        return isValid;
+    }
+
+    onChangeHandler = (event, inputIdentifier) => {
+        const updatedOrderForm = {
+            ...this.state.orderForm
+        };
+        const updatedInput = { // Immutable하게 copy함.
+            ...updatedOrderForm[inputIdentifier],
+        };
+        updatedInput.value = event.target.value;
+        updatedInput.valid = this.checkValidity(updatedInput.value, updatedOrderForm[inputIdentifier].validation);
+        updatedInput.touched = true;
+        updatedOrderForm[inputIdentifier] = updatedInput;
+
+        let formIsValid = true;
+        for(let inputIdentifier in updatedOrderForm) {
+            formIsValid = (updatedOrderForm[inputIdentifier].valid && formIsValid);
+        }
+        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
+    }
+
     render() {
+        const formElementArrays = [];
+        for(let key in this.state.orderForm) {
+            formElementArrays.push({
+                id: key,
+                config: this.state.orderForm[key]
+            });
+        }
         return (
             <>
-                {this.state.onOrder ? <Spinner /> 
-                : ( 
-                    <div className="ContactData">
-                        <h4>Enter Your Contact Data</h4>
-                        <form>
-                            <Input inputtype="input" type="text" name="name" placeholder="Your name here" onChange={(event) => {this.setState({name: event.target.value})}}/>
-                            <Input inputtype="input" type="email" name="email" placeholder="Your email here" onChange={(event) => {this.setState({email: event.target.value})}}/>
-                            <Input inputtype="input" type="text" name="street" placeholder="Street here" onChange={(event) => {this.setState({street: event.target.value})}}/>
-                            <Input inputtype="input" type="text" name="postalCode" placeholder="PostalCode here" onChange={(event) => {this.setState({postalCode: event.target.value})}}/>
-                            <Button clicked={this.orderHandler} btnType="Success">Order</Button>
-                        </form>
-                    </div>
-                  )
+                {this.state.onOrder ? <Spinner /> : 
+                    ( 
+                        <div className="ContactData">
+                            <h4>Enter Your Contact Data</h4>
+                            <form onSubmit={this.orderHandler}>
+                                {formElementArrays.map(el => (
+                                    <Input key={el.id}
+                                    type={el.id} 
+                                    elementType={el.config.elementType} 
+                                    elementConfig={el.config.elementConfig} 
+                                    value={el.config.value}
+                                    touched={el.config.touched}
+                                    inValid={!el.config.valid}
+                                    shouldValidate={el.config.validation}
+                                    changed={(event) => this.onChangeHandler(event, el.id)}
+                                    />
+                                ))}
+                                <Button disabled={!this.state.formIsValid} btnType="Success">Order</Button>
+                            </form>
+                        </div>
+                    )
                 }
                 
             </>
@@ -65,4 +192,11 @@ class ContactData extends React.Component {
     }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+    return {
+        ingre: state.ingredients,
+        totPrice: state.totalPrice
+    }
+}
+
+export default connect(mapStateToProps)(ContactData);

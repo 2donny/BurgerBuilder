@@ -9,10 +9,19 @@
     margin: 13px 0;
     outline: none;
     border: 1px solid #ccc;
-    display: block;
     font: inherit;
 }
 
 .InputElement:focus {
     background-color: #ccc;
+}
+
+.Invalid {
+    border: 1px solid red;
+    background-color: salmon;
+}
+
+.errorMessage {
+    color: red;
+    margin: 6px 0;
 }

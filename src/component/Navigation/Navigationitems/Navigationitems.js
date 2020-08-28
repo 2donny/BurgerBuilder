@@ -6,7 +6,7 @@ function Navigationitems() {
     return (
         <ul className="Navigationitems">
             <Navigationitem link="/">Burger Builder</Navigationitem> 
-            <Navigationitem link="/orders">Checkout</Navigationitem>
+            <Navigationitem link="/orders">Order</Navigationitem>
         </ul>
     )
 }

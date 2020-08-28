@@ -5,11 +5,16 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {createStore} from 'redux';
-import rootReducer from './Store/reducer';
+import {createStore, applyMiddleware, compose} from 'redux';
+import burgerBuilderReducer from './Store/reducers/burgerBuilder';
+import thunk from 'redux-thunk';
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(rootReducer);
+const store = createStore(
+  burgerBuilderReducer,
+  composeEnhancers(applyMiddleware(thunk)) //리덕스에 미들웨어 사용시
+);
 
 const app = (
   <Provider store={store}>
