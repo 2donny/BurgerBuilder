@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Redirect} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import ContactData from './ContactData/ContactData';
 import CheckoutSummary from '../../component/Order/CheckoutSummary/CheckoutSummary';
@@ -15,7 +15,6 @@ class Checkout extends React.Component {
     }
     
     render() {
-        console.log(this.props);
         return (
             <>
                 {this.props.ingre ? (
@@ -43,8 +42,8 @@ class Checkout extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        ingre: state.ingredients,
-        totPrice: state.totalPrice
+        ingre: state.burgerBuilder.ingredients,
+        totPrice: state.burgerBuilder.totalPrice
     }
 }
 export default connect(mapStateToProps, null)(Checkout);
