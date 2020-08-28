@@ -40,3 +40,9 @@ export const initIngredient = () => {
             })
     }
 }
+
+export const fetchOrder = () => {
+    return dispatch => {
+        axios.get()
+    }
+}
