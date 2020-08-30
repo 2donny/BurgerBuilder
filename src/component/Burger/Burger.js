@@ -3,7 +3,6 @@ import './Burger.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
 function Burger( {ingredient} ) {
-    console.log(ingredient)
     let transformedIngredient = Object.keys(ingredient).map(ig => {
             return [...Array(ingredient[ig])].map((_, i) => {
                 return <BurgerIngredient key={ig + i} type={ig}/>

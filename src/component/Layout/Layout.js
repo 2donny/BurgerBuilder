@@ -3,10 +3,7 @@ import Toolbar from '../Navigation/Toolbar/Toolbar';
 import './Layout.css';
 import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 import Backdrop from '../UI/Backdrop/Backdrop';
-
-const clicked = () => {
-
-}
+import {connect} from 'react-redux';
 
 class Layout extends React.Component {
     constructor(props) {
@@ -28,12 +25,18 @@ class Layout extends React.Component {
         return (
             <div className="Container">
                 <Backdrop show={this.state.MenuClicking} clicked={this.Backdropclicked}/>
-                <SideDrawer show={this.state.MenuClicking}/>
-                <Toolbar MenuClicked={this.MenuClicked}/>
+                <SideDrawer isAuth={this.props.isAuthenticated} show={this.state.MenuClicking}/>
+                <Toolbar isAuth={this.props.isAuthenticated} MenuClicked={this.MenuClicked}/>
                 {this.props.children}
             </div>
         )
     }
 }
 
-export default Layout;
+const mapStateToProps = store => {
+    return {
+        isAuthenticated: store.auth.token !== null
+    }
+}
+
+export default connect(mapStateToProps)(Layout);

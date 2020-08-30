@@ -8,12 +8,11 @@ import * as actions from '../../Store/actions/index';
 
 
 class Orders extends React.Component {
-   componentDidMount() {
-       this.props.fetchOrder();
+    componentDidMount() {
+       this.props.fetchOrder(this.props.token);
     }
 
     render() {
-        
         return (
             <>
                 {!this.props.loading ? (
@@ -22,23 +21,24 @@ class Orders extends React.Component {
                             <Order key={order.id} ingredient={order.ingredient} totalPrice={+order.totalPrice}/>
                         ))}
                     </div> 
-                )   :   <Spinner />
+                )  :  <Spinner />
                 }
             </>
         )
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = store => {
     return {
-        orders: state.order.orders,
-        loading: state.order.loading
+        orders: store.order.orders,
+        loading: store.order.loading,
+        token: store.auth.token,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchOrder: () => dispatch(actions.fetchOrder()),
+        fetchOrder: (token) => dispatch(actions.fetchOrder(token)),
     }
 }
 

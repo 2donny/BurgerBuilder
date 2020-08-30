@@ -10,7 +10,7 @@ function Toolbar(props) {
             <SidedrawerToggle clicked={props.MenuClicked}/>
             <Logo height="80%"/>
             <nav className="Toolbar--nav">
-                <Navigationitems/>
+                <Navigationitems isAuth={props.isAuth}/>
             </nav>
         </header>
     )

@@ -1,11 +1,13 @@
 import React from 'react';
 import './Button.css';
 
-function Button({children, clicked, btnType, disabled}) {
+function Button({children, width, clicked, btnType, disabled}) {
     return (
         <button onClick={clicked} 
                 className={['Button', btnType].join(' ')}
-                disabled={disabled}>
+                disabled={disabled}
+                style={{width: width}}
+                >
             {children}
         </button>
     )

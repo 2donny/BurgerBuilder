@@ -10,7 +10,6 @@ function orderSummary( {cancleClicked, continueClicked, ingredients, totalPrice}
                 </li>
             )
         })
-    console.log('Price : ', totalPrice);
     return (
         <div>
             <h3>Your Order</h3>

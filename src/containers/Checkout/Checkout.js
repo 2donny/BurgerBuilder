@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import ContactData from './ContactData/ContactData';
 import CheckoutSummary from '../../component/Order/CheckoutSummary/CheckoutSummary';
 import Spinner from '../../component/UI/Spinner/Spinner';
-import * as orderAction from '../../Store/actions/index';
 
 class Checkout extends React.Component {
     checkoutCancelHandler = () => {
@@ -14,11 +13,11 @@ class Checkout extends React.Component {
     checkoutContinueHandler = () => {
         this.props.history.push('/checkout/contact-data');
     }
-    
     // componentWillMount() {
     //     // this.props.purchaseInit(); //이게 전부 실행되서, purchased가 false가 되기 전에.
     //     // console.log('componentWillMount : ', this.props.purchased); //여기서 purchased는 true이고, true인 상태에서 render()로 가니까, Redirect된다. 그래서 여기서 말고 Checkout 페이지로 못가는거임. 그러므로 BurgerBuilder 페이지에서 Continue 버튼을 누를때 purchasedInit을 미리해주자. 
     // }
+    
     render() {
         const purchasedRedirect = this.props.purchased ? <Redirect to='/'/> : null;
         return (

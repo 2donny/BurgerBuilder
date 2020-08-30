@@ -21,7 +21,7 @@ const controls = [
     },
 ]
 
-function BuildControls({totalPrice, disabledInfo, addIngredientHandler, removeIngredientHandler, purchasableInfo, ordered}) {
+function BuildControls({isAuth, totalPrice, disabledInfo, addIngredientHandler, removeIngredientHandler, purchasableInfo, ordered}) {
     return (
         <div className="BuildControls">
             <p>Current Price : <strong>{totalPrice.toFixed(2)}</strong></p>
@@ -39,7 +39,7 @@ function BuildControls({totalPrice, disabledInfo, addIngredientHandler, removeIn
                 className="OrderButton" 
                 disabled={!purchasableInfo}
                 onClick={ordered}
-            > ORDER NOW </button>
+            >{isAuth ? "ORDER NOW" : "Login to order !"}</button>
         </div>
     )
 }
