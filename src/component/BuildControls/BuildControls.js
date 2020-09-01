@@ -39,7 +39,8 @@ function BuildControls({isAuth, totalPrice, disabledInfo, addIngredientHandler, 
                 className="OrderButton" 
                 disabled={!purchasableInfo}
                 onClick={ordered}
-            >{isAuth ? "ORDER NOW" : "Login to order !"}</button>
+                style={{width: "190px", padding: "20px"}}
+            >{isAuth ? "ORDER NOW" : "SIGN UP TO ORDER!"}</button>
         </div>
     )
 }

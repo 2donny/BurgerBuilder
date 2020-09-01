@@ -13,5 +13,6 @@ export {
 export {
         auth,
         errorInit,
-        logout
+        logout,
+        authCheckState
 } from './Auth';

@@ -9,13 +9,6 @@ import withErrorHandler from '../../HOC/withErrorHandler/withErrorHandler';
 import {connect} from 'react-redux';
 import * as actions from '../../Store/actions/index';
 
-const INGREDIENTS_PRICE = {
-    Meat: 1.5,
-    Cheese: 0.6,
-    Salad: 0.4,
-    Bacon: 1.5
-}
-
 class BurgerBuilder extends React.Component {
     constructor(props) {
         super(props);

@@ -5,6 +5,7 @@ import './Auth.css';
 import { connect } from 'react-redux';
 import Spinner from '../../component/UI/Spinner/Spinner';
 import {Redirect} from 'react-router-dom';
+import {checkValidity} from '../../Shared/utility';
 import * as action from '../../Store/actions/index';
 
 
@@ -33,7 +34,7 @@ class Auth extends React.Component {
                 value: '',
                 validation: {
                     required: true,
-                    minLength: 8
+                    minLength: 5
                 },
                 valid: false,
                 touched: false
@@ -43,26 +44,6 @@ class Auth extends React.Component {
         error: "",
     }
 
-    checkValidity = (value, rules) => {
-        let isValid = false;
-
-        if(!rules) {
-            return false;
-        }
-        if(rules.required) {
-            isValid = value.trim() !== '';
-        }
-
-        if(rules.minLength) {
-            isValid = (value.length >= rules.minLength);
-        }
-
-        if(rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-
-        return isValid;
-    }
 
     onChangeHandler = (event, inputIdentifier) => {
         const updatedControl = {
@@ -70,7 +51,7 @@ class Auth extends React.Component {
             [inputIdentifier]: {
                 ...this.state.control[inputIdentifier],
                 value: event.target.value,
-                valid: this.checkValidity(event.target.value, this.state.control[inputIdentifier].validation),
+                valid: checkValidity(event.target.value, this.state.control[inputIdentifier].validation),
                 touched: true,
             }
         }
@@ -119,7 +100,11 @@ class Auth extends React.Component {
         }
         
         if(this.props.token) {
-            form = <Redirect to="/"/>
+            if(this.props.ingredients) { //로그인 + 선택했던 재료가 있는 경우
+                form = <Redirect to="/checkout"/>
+            }else {
+                form = <Redirect to="/"/>
+            }
         }
         return (
             <div className="Auth">
@@ -139,6 +124,7 @@ const mapStateToProps = store => {
         loading: store.auth.loading,
         error: store.auth.error,
         token: store.auth.token,
+        ingredients: store.burgerBuilder.ingredients
     }
 }
 

@@ -20,12 +20,15 @@ class Layout extends React.Component {
     Backdropclicked = () => {
         this.setState( {MenuClicking: false});
     }
+    SideDrawerCloseHandler = () => {
+        this.setState( {MenuClicking: false});
+    }
 
     render() {
         return (
             <div className="Container">
                 <Backdrop show={this.state.MenuClicking} clicked={this.Backdropclicked}/>
-                <SideDrawer isAuth={this.props.isAuthenticated} show={this.state.MenuClicking}/>
+                <SideDrawer isAuth={this.props.isAuthenticated} show={this.state.MenuClicking} closed={this.SideDrawerCloseHandler}/>
                 <Toolbar isAuth={this.props.isAuthenticated} MenuClicked={this.MenuClicked}/>
                 {this.props.children}
             </div>

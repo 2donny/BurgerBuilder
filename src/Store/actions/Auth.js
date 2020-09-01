@@ -23,6 +23,9 @@ export const authFail = (error) => {
 }
 
 export const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expirationDate');
+    localStorage.removeItem('userId');
     return {
         type: actionTypes.AUTH_LOGOUT,
     }
@@ -32,7 +35,7 @@ export const checkAuthTimeout = (expirationTime) => {
     return dispatch => {
         setTimeout(() => {
             dispatch(logout());
-        }, expirationTime * 1000);
+        }, expirationTime * 1000); // 토큰 만료기간 되면, 자동으로 로그아웃됨.
     }
 }
 
@@ -56,13 +59,37 @@ export const auth = (email, password, isSignup) => {
         }
         axios.post(url, authData)
             .then(res => {
-                console.log(res.data);
+                const expirationTime = new Date(new Date().getTime() + res.data.expiresIn * 1000);
+                localStorage.setItem('token', res.data.idToken);
+                localStorage.setItem('expirationDate', expirationTime);
+                localStorage.setItem('userId', res.data.localId);
                 dispatch(authSuccess(res.data.idToken, res.data.localId));
                 dispatch(checkAuthTimeout(res.data.expiresIn));
             })       
             .catch(err => {
-                console.log(err.response.data.error.message)
                 dispatch(authFail(err.response.data.error.message));
             })
+    }
+}
+
+export const authCheckState = () => {
+    return dispatch => {
+        const token = localStorage.getItem('token');
+        if(!token) {
+            dispatch(logout());
+        } else { //새로고침했을 때 여기 실행. 로컬 스토리지에 토큰이 있는 상태.
+            const expirationDate = new Date(localStorage.getItem('expirationDate'));
+            if(new Date() < expirationDate) { //만료시간이 아직 남아있을 때만
+                const userId = localStorage.getItem('userId');
+                const expirationTime = expirationDate.getTime(); // 밀리초 단위.
+                const currentTime = new Date().getTime();
+                const leftTime = expirationTime - currentTime; //여전히 밀리초
+                dispatch(authSuccess(token, userId));
+                dispatch(checkAuthTimeout(leftTime / 1000)); //초 단위로 바꾸기.
+            }else {
+                dispatch(logout()); //이거 안해줘도 checkAuthTimeout() 액션으로 자동 로그아웃 되긴함.
+            }
+        }   
+
     }
 }

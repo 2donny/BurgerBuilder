@@ -5,7 +5,7 @@ import Navigationitems from '../Navigationitems/Navigationitems';
 
 function SideDrawer(props) {
     return (
-        <div className={props.show ? "SideDrawer Open" : "SideDrawer Close"}>
+        <div className={props.show ? "SideDrawer Open" : "SideDrawer Close"} onClick={props.closed}>
             <Logo height="11%"/>
             <div className="drawer--nav">
                 <Navigationitems isAuth={props.isAuth}/>

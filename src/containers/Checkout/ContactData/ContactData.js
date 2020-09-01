@@ -4,6 +4,7 @@ import Button from '../../../component/UI/Button/Button';
 import Spinner from '../../../component/UI/Spinner/Spinner';
 import Input from '../../../component/UI/Input/Input';
 import {connect} from 'react-redux';
+import {checkValidity} from '../../../Shared/utility';
 import * as action from '../../../Store/actions/index';
 
 class ContactData extends React.Component {
@@ -100,30 +101,12 @@ class ContactData extends React.Component {
             ingredient: this.props.ingre,
             totalPrice: this.props.totPrice,
             orderForm: formData,
+            userId: this.props.userId
         }
         this.props.purchaseBurger(order, this.props.token);
     }
 
-    checkValidity = (value, rules) => {
-        let isValid = false;
-
-        if(!rules) {
-            return false;
-        }
-        if(rules.required) {
-            isValid = value.trim() !== '';
-        }
-
-        if(rules.minLength) {
-            isValid = (value.length >= rules.minLength);
-        }
-
-        if(rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-
-        return isValid;
-    }
+    
 
     onChangeHandler = (event, inputIdentifier) => {
         const updatedOrderForm = {
@@ -133,7 +116,7 @@ class ContactData extends React.Component {
             ...updatedOrderForm[inputIdentifier],
         };
         updatedInput.value = event.target.value;
-        updatedInput.valid = this.checkValidity(updatedInput.value, updatedOrderForm[inputIdentifier].validation);
+        updatedInput.valid = checkValidity(updatedInput.value, updatedOrderForm[inputIdentifier].validation);
         updatedInput.touched = true;
         updatedOrderForm[inputIdentifier] = updatedInput;
 
@@ -188,6 +171,7 @@ const mapStateToProps = state => {
         totPrice: state.burgerBuilder.totalPrice,
         loading: state.order.loading,
         token: state.auth.token,
+        userId: state.auth.userId,
     }
 }
 

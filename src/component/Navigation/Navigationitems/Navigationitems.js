@@ -3,7 +3,6 @@ import './Navigationitems.css';
 import Navigationitem from './Navigationitem/Navigationitem';
 
 function Navigationitems(props) {
-    console.log("isAuth : ", props.isAuth);
     return (
         <ul className="Navigationitems">
             <Navigationitem link="/">Burger Builder</Navigationitem> 

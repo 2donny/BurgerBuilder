@@ -9,7 +9,7 @@ import * as actions from '../../Store/actions/index';
 
 class Orders extends React.Component {
     componentDidMount() {
-       this.props.fetchOrder(this.props.token);
+       this.props.fetchOrder(localStorage.getItem('token'), localStorage.getItem('userId'));
     }
 
     render() {
@@ -38,7 +38,7 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchOrder: (token) => dispatch(actions.fetchOrder(token)),
+        fetchOrder: (token, userId) => dispatch(actions.fetchOrder(token, userId)),
     }
 }
 
